@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    {% load static %}
+   <!-- <link href="{% static 'css/main.css' %}" rel="stylesheet" type="text/css "/> -->
+    <link href="{% static 'css/main.css' %}" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <header class="main-navigation">
+        <nav class="app-navigation">
+            <ul class="app-navigation__menu">
+                <li class="app-navigation__menu_link">
+                    <a href="{% url 'concentrateapp_folder:home_page' %}">Главная</a>
+                </li>
+                <li class="app-navigation__menu_link">
+                    <a href="">Вход в приложение</a>
+                </li>
+                <li class="app-navigation__menu_link">
+                    <a href="{% url 'concentrateapp_folder:about_us' %}">О нас</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <main class="main-content">
+        <div class="container">
+          {% block main_content %}{% endblock %}
+        </div>
+    </main>
+</body>
+</html>
