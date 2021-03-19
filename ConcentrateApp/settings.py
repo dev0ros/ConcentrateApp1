@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'yzfrelt1^n8)ux5c5*uedpw)80*%9d2ir_=1z(n_-^dncf)8@w'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['concentrationapp1.azurewebsites.net','127.0.0.1','localhost']
 
@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
+   "whitenoise.runserver_nostatic",
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
@@ -45,6 +46,7 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -119,13 +121,18 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 STATICFILES_DIRS = [
-    BASE_DIR / "concentrateapp_folder/static",
-    os.path.join(BASE_DIR, '../static'),
-    'var/www/static/',
+    BASE_DIR / "/concentrateapp_folder/static",
+    #os.path.join(BASE_DIR, '../static'),
+    # 'var/www/static/',
 ]
-STATIC_URL = '/static/'
+#STATIC_URL = '/static/'
 VENV_PATH = os.path.dirname(BASE_DIR)
-STATIC_ROOT = os.path.join(VENV_PATH, 'static_root')
-#STATIC_ROOT = posixpath.join(*(BASE_DIR.split(os.path.sep) + ['static']))
+#STATIC_ROOT = os.path.join(VENV_PATH, 'static_root')
 
-#STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+STATIC_URL = os.environ.get("DJANGO_STATIC_URL", "/static_root/")
+STATIC_ROOT = os.environ.get("DJANGO_STATIC_ROOT", "./static_root/")
+# убрать решетку ниже если диплою иначе F
+#STATICFILES_STORAGE = ('whitenoise.storage.CompressedManifestStaticFilesStorage')
+#STATIC_ROOT = posixpath.join(*(BASE_DIR.split(os.path.sep) + ['static']))'''
+
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
